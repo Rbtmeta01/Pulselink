@@ -26,13 +26,13 @@ const ctx = document.getElementById('ecgChart').getContext('2d');
 const myChart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: [], // Time labels
+        labels: [], // Time labels (will be updated dynamically)
         datasets: [{
             label: 'ECG Waveform',
             data: [],
-            borderColor: 'rgba(75, 192, 192, 1)',
+            borderColor: 'rgba(75, 192, 192, 1)', // Line color
             borderWidth: 2,
-            fill: false,
+            fill: false,  // Do not fill under the line
         }]
     },
     options: {
@@ -45,7 +45,7 @@ const myChart = new Chart(ctx, {
                 }
             },
             y: {
-                beginAtZero: true,
+                beginAtZero: true, // Ensure ECG values start from 0
                 title: {
                     display: true,
                     text: 'ECG Value'
@@ -57,14 +57,16 @@ const myChart = new Chart(ctx, {
 
 // Function to add data to the chart
 function addData(chart, value) {
-    const currentTime = new Date().toLocaleTimeString(); // Current time label
-    chart.data.labels.push(currentTime); // Add time label
-    chart.data.datasets[0].data.push(value); // Add ECG data point
+    // Add current time label and ECG value data point
+    const currentTime = (chart.data.labels.length * 1).toString(); // X-axis: sequential time points
+    chart.data.labels.push(currentTime);  // Use the index as the time label (sequential)
+    chart.data.datasets[0].data.push(value);  // Add ECG data point to chart
 
-    if (chart.data.labels.length > 20) { // Limit to the latest 20 points
+    // Limit chart data to the latest 20 points to keep the chart updated
+    if (chart.data.labels.length > 20) {
         chart.data.labels.shift();
         chart.data.datasets[0].data.shift();
     }
-    chart.update();
+    chart.update();  // Update the chart with the new data
 }
 
