@@ -13,8 +13,8 @@ async function fetchECGData() {
         addData(myChart, data.ecg_value);
     } catch (error) {
         console.error("Error fetching ECG data:", error);
-        document.getElementById("ecg_value").innerText = "Error: ECG Value";
-        document.getElementById("status").innerText = "Error: Status";
+        document.getElementById("ecg_value").innerText = "Error: Unable to Fetch ECG Value";
+        document.getElementById("status").innerText = "Error: Status Unavailable";
     }
 }
 
